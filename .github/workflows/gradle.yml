@@ -72,9 +72,4 @@ jobs:
             
             # 새 프로세스의 PID 기록 (pidfile)
             echo $! > ./pidfile
-            
-            # nohup.out 파일이 없으면 빈 파일을 생성 (확인용)
-            touch ./nohup.out
-            
-            # nohup.out 로그 확인 (로그가 생길 때까지 대기)
-            tail -f ./nohup.out
+      
