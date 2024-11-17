@@ -7,7 +7,7 @@ on:
       
   push:
     branches:
-      - "*"
+      - "main"
 
 permissions:
   contents: read
@@ -48,7 +48,6 @@ jobs:
 
       # `main` 브랜치로 푸시될 때만 배포 단계 수행
       - name: Deploy to Hosts
-        if: github.ref == 'refs/heads/main'  # main 브랜치로 푸시될 때만 실행
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.BASTION_IP}}  # Bastion Host의 IP 주소 또는 호스트 이름
