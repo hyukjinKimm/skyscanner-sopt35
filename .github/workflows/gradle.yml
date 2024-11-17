@@ -1,6 +1,10 @@
 name: Java CD with Gradle
 
 on:
+  pull_request:
+    branches:
+      - "main"  # PR 대상이 'main' 브랜치일 때 실행
+      
   push:
     branches:
       - "*"
