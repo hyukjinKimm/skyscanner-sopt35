@@ -1,0 +1,77 @@
+name: Java CD with Gradle
+
+on:
+  push:
+    branches:
+      - "main"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # JDK 설정
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      # 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # application.yml 생성 및 디렉토리 생성
+      - run: mkdir -p ./src/main/resources
+      - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+      - run: cat ./src/main/resources/application.yml  # 내용 확인
+
+      # Gradle 실행 권한 부여
+      - name: Grant execute permission for gradlew
+        run: |
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+          else
+            echo "gradlew file not found!"
+            exit 1
+          fi
+
+      # Gradle Build (test 제외)
+      - name: Build with Gradle
+        run: ./gradlew clean build -x test
+
+      # EC2 인스턴스 접속 및 애플리케이션 실행
+      - name: Deploy to Hosts
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.BASTION_IP}}  # Bastion Host의 IP 주소 또는 호스트 이름
+          username: ${{ secrets.EC2_USERNAME}}  # Bastion Host의 사용자 이름
+          key: ${{ secrets.EC2_KEY}}  # Bastion Host의 SSH 개인 키
+
+          script: |
+            # EC2에서 작업 디렉터리로 이동
+            cd /home/ubuntu/skyscanner-sopt35
+
+            # Gradle 실행 권한 부여
+            chmod +x ./gradlew
+
+            # 기존 프로세스 종료 (PID 파일을 사용하는 방식)
+            echo "Stopping any existing application..."
+            if [ -f ./pidfile ]; then
+              pid=$(cat ./pidfile)
+              echo "Killing process with PID $pid..."
+              kill -9 $pid || echo "No running process found."
+            fi
+
+            # 새 프로세스를 백그라운드에서 실행
+            echo "Starting new application in the background..."
+            nohup java -jar skyscanner-0.0.1-SNAPSHOT.jar > skyscanner.log 2>&1 &
+
+            # 새 프로세스의 PID 기록 (pidfile)
+            echo $! > ./pidfile
+
+            # nohup.out 로그 확인
+            tail -f ./nohup.out
+            ENDSSH
