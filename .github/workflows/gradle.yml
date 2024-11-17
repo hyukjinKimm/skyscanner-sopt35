@@ -60,7 +60,7 @@ jobs:
             
             echo "Stopping any application using port 8080..."
             # 8080 포트를 사용하는 프로세스 찾기
-            pid=$(lsof -t -i:8080)
+            pid=$(sudo lsof -i :8080)
             
             # 프로세스가 있으면 종료
             if [ -n "$pid" ]; then
