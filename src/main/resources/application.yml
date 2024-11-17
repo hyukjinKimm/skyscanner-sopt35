@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://test3.ctoc0cue8l22.ap-northeast-2.rds.amazonaws.com:5432/testdb
-    username: master
-    password: master-password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://skyscanner-rds.ctoc0cue8l22.ap-northeast-2.rds.amazonaws.com/skyscanner
+    username: admin
+    password: admin-password
   jpa:
     show-sql: true
     hibernate:
