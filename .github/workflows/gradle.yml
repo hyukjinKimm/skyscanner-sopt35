@@ -1,10 +1,13 @@
 name: Java CD with Gradle
 
 on:
+  pull_request:
+    branches:
+      - "main"  # PR 대상이 'main' 브랜치일 때 실행
+      
   push:
     branches:
-      - "main"
-      - "*"  # 다른 모든 브랜치에 대해서도 반응하도록 설정
+      - "*"
 
 permissions:
   contents: read
