@@ -62,14 +62,14 @@ jobs:
             
             echo "Stopping any application using port 8080..."
             # 8080 포트를 사용하는 프로세스 찾기
-            pid=$(sudo lsof -i :8080)
+            pid=$(sudo lsof -t -i :8080)
             
-            # 프로세스가 있으면 종료
+            # PID가 존재하는 경우에만 종료
             if [ -n "$pid" ]; then
-              echo "Killing process with PID $pid that is using port 8080..."
-              kill -9 $pid || echo "Failed to kill process $pid."
+                echo "Killing process with PID $pid..."
+                sudo kill -9 $pid
             else
-              echo "No process found using port 8080."
+                echo "No process found using port 8080."
             fi
 
             # 새 프로세스를 백그라운드에서 실행
