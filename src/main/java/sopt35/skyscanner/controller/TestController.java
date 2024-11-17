@@ -11,6 +11,6 @@ public class TestController {
     @GetMapping("/")
     public String test() {
         return "SUCCESS!";
-    }
+    }빌드를깨보자!
 
 }
