@@ -52,8 +52,10 @@ jobs:
 
           script: |
             # EC2에서 작업 디렉터리로 이동
-            # EC2에서 작업 디렉터리로 이동
             cd /home/ubuntu/skyscanner-sopt35
+
+            # 최신 코드 가져오기
+            sudo git pull origin main
             
             # Gradle 실행 권한 부여
             chmod +x ./gradlew
@@ -74,6 +76,4 @@ jobs:
             echo "Starting new application in the background..."
             nohup java -jar /home/ubuntu/skyscanner-sopt35/build/libs/skyscanner-0.0.1-SNAPSHOT.jar > /home/ubuntu/skyscanner-sopt35/skyscanner.log 2>&1 &
 
-            # 새 프로세스의 PID 기록 (pidfile)
-            echo $! > ./pidfile
       
