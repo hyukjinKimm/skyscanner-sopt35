@@ -3,11 +3,11 @@ name: Java CD with Gradle
 on:
   pull_request:
     branches:
-      - "main"  # PR 대상이 'main' 브랜치일 때 실행
-      
+      - "main"  # PR 대상이 'main' 브랜치일 때만 실행, 빌드만 실행됨
+
   push:
     branches:
-      - "main"
+      - "main"  # main 브랜치에 푸시될 때만 배포가 실행됨
 
 permissions:
   contents: read
@@ -46,7 +46,12 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build -x test
 
-      # `main` 브랜치로 푸시될 때만 배포 단계 수행
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' # `push` 이벤트이면서 `main` 브랜치에 푸시될 때만 실행
+    runs-on: ubuntu-latest
+
+    steps:
+      # EC2 인스턴스 접속 및 애플리케이션 실행
       - name: Deploy to Hosts
         uses: appleboy/ssh-action@v0.1.6
         with:
