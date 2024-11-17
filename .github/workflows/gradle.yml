@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "main"
+      - "*"  # 다른 모든 브랜치에 대해서도 반응하도록 설정
 
 permissions:
   contents: read
@@ -42,8 +43,9 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew clean build -x test
 
-      # EC2 인스턴스 접속 및 애플리케이션 실행
+      # `main` 브랜치로 푸시될 때만 배포 단계 수행
       - name: Deploy to Hosts
+        if: github.ref == 'refs/heads/main'  # main 브랜치로 푸시될 때만 실행
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.BASTION_IP}}  # Bastion Host의 IP 주소 또는 호스트 이름
@@ -78,5 +80,3 @@ jobs:
             # 새 프로세스를 백그라운드에서 실행
             echo "Starting new application in the background..."
             nohup java -jar /home/ubuntu/skyscanner-sopt35/build/libs/skyscanner-0.0.1-SNAPSHOT.jar > /home/ubuntu/skyscanner-sopt35/skyscanner.log 2>&1 &
-
-      
