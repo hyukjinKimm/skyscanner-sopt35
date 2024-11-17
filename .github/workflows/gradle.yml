@@ -58,14 +58,18 @@ jobs:
             # Gradle 실행 권한 부여
             chmod +x ./gradlew
             
-            # 기존 프로세스 종료 (PID 파일을 사용하는 방식)
-            echo "Stopping any existing application..."
-            if [ -f ./pidfile ]; then
-              pid=$(cat ./pidfile)
-              echo "Killing process with PID $pid..."
-              kill -9 $pid || echo "No running process found."
-            fi
+            echo "Stopping any application using port 8080..."
+            # 8080 포트를 사용하는 프로세스 찾기
+            pid=$(lsof -t -i:8080)
             
+            # 프로세스가 있으면 종료
+            if [ -n "$pid" ]; then
+              echo "Killing process with PID $pid that is using port 8080..."
+              kill -9 $pid || echo "Failed to kill process $pid."
+            else
+              echo "No process found using port 8080."
+            fi
+
             # 새 프로세스를 백그라운드에서 실행
             echo "Starting new application in the background..."
             nohup java -jar /home/ubuntu/skyscanner-sopt35/build/libs/skyscanner-0.0.1-SNAPSHOT.jar > /home/ubuntu/skyscanner-sopt35/skyscanner.log 2>&1 &
