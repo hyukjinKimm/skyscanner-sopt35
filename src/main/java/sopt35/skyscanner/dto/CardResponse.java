@@ -2,6 +2,7 @@ package sopt35.skyscanner.dto;
 
 import sopt35.skyscanner.repository.Card;
 
+
 public class CardResponse {
     private long id;
     private String country;
@@ -28,7 +29,7 @@ public class CardResponse {
         this.arrivalTicketDescription = card.getArrivalTicketDescription();
     }
 
-    // Getters and Setters
+    // Getter와 Setter
     public long getId() {
         return id;
     }
@@ -108,5 +109,4 @@ public class CardResponse {
     public void setArrivalTicketDescription(String arrivalTicketDescription) {
         this.arrivalTicketDescription = arrivalTicketDescription;
     }
-
 }

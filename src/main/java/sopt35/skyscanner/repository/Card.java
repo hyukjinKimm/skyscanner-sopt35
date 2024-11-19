@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDate;
 
 @Entity
 public class Card {
@@ -12,6 +11,8 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String backgroundImageUrl;
 
     private String country;
     private String spot;
@@ -40,85 +41,49 @@ public class Card {
     public Card() {
     }
 
-    // 게터/세터 메서드
+    // Getter 메서드
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getBackgroundImageUrl() {
+        return backgroundImageUrl;
     }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
     public String getSpot() {
         return spot;
-    }
-
-    public void setSpot(String spot) {
-        this.spot = spot;
     }
 
     public String getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public String getDepartureAirlineImageUrl() {
         return departureAirlineImageUrl;
-    }
-
-    public void setDepartureAirlineImageUrl(String departureAirlineImageUrl) {
-        this.departureAirlineImageUrl = departureAirlineImageUrl;
     }
 
     public String getDepartureDate() {
         return departureDate;
     }
 
-    public void setDepartureDate(String departureDate) {
-        this.departureDate = departureDate;
-    }
-
     public String getDepartureTicketDescription() {
         return departureTicketDescription;
-    }
-
-    public void setDepartureTicketDescription(String departureTicketDescription) {
-        this.departureTicketDescription = departureTicketDescription;
     }
 
     public String getArrivalAirlineImageUrl() {
         return arrivalAirlineImageUrl;
     }
 
-    public void setArrivalAirlineImageUrl(String arrivalAirlineImageUrl) {
-        this.arrivalAirlineImageUrl = arrivalAirlineImageUrl;
-    }
-
     public String getArrivalDate() {
         return arrivalDate;
     }
 
-    public void setArrivalDate(String arrivalDate) {
-        this.arrivalDate = arrivalDate;
-    }
-
     public String getArrivalTicketDescription() {
         return arrivalTicketDescription;
-    }
-
-    public void setArrivalTicketDescription(String arrivalTicketDescription) {
-        this.arrivalTicketDescription = arrivalTicketDescription;
     }
 }
