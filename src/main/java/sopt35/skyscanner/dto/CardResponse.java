@@ -123,4 +123,3 @@ public class CardResponse {
         this.arrivalTicketDescription = arrivalTicketDescription;
     }
 }
-}
