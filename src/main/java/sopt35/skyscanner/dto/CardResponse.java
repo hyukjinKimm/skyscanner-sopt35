@@ -3,8 +3,11 @@ package sopt35.skyscanner.dto;
 import sopt35.skyscanner.repository.Card;
 
 
+
 public class CardResponse {
     private long id;
+
+    private String backgroundImageUrl;
     private String country;
     private String spot;
     private String price;
@@ -18,6 +21,7 @@ public class CardResponse {
     // Card 객체를 받아서 초기화하는 생성자
     public CardResponse(Card card) {
         this.id = card.getId();
+        this.backgroundImageUrl = card.getBackgroundImageUrl();
         this.country = card.getCountry();
         this.spot = card.getSpot();
         this.price = card.getPrice();
@@ -36,6 +40,15 @@ public class CardResponse {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+
+    public String getBackgroundImageUrl() {
+        return backgroundImageUrl;
+    }
+
+    public void setBackgroundImageUrl(String backgroundImageUrl) {
+        this.backgroundImageUrl = backgroundImageUrl;
     }
 
     public String getCountry() {
@@ -109,4 +122,5 @@ public class CardResponse {
     public void setArrivalTicketDescription(String arrivalTicketDescription) {
         this.arrivalTicketDescription = arrivalTicketDescription;
     }
+}
 }
