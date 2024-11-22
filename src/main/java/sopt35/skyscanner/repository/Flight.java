@@ -9,128 +9,95 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Flight {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String departure;
+    // 출발지 : 서울 고정
+    private String departAt;
 
-    private LocalDateTime dep_time1;
+    // 여행 목적지 : 오키나와 고정
+    private String arriveAt;
 
-    private LocalDateTime arr_time1;
+    // 출발하는 항공편의 이륙 시간
+    private LocalDateTime depTime1;
 
-    private LocalDateTime dep_time2;
+    // 출발하는 항공편의 착륙 시간
+    private LocalDateTime arrTime1;
 
-    private LocalDateTime arr_time2;
+    // 도착하는 항공편의 이륙 시간
+    private LocalDateTime depTime2;
 
-    private float dep_price;
+    // 도착하는 항공편의 착륙 시간
+    private LocalDateTime arrTime2;
 
-    private float arr_price;
+    // 출발하는 항공편의 가격.. 10만원 ~ 15만원 사이
+    private float depPrice;
 
+    // 도착하는 항공편의 가격.. 10만원 ~ 15만원 사이
+    private float arrPrice;
+
+    // 항공사
     private String airline;
 
-    private Boolean is_like;
+    // 좋아요 여부 : 초기값 false
+    private Boolean isLike;
 
+    // 인원수 1명 ~ 4명
     private int count;
 
-    // Getter and Setter for id
+    public Flight() {
+    }
+
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getDepartAt() {
+        return departAt;
     }
 
-    // Getter and Setter for departure
-    public String getDeparture() {
-        return departure;
+    public String getArriveAt() {
+        return arriveAt;
     }
 
-    public void setDeparture(String departure) {
-        this.departure = departure;
+    public LocalDateTime getDepTime1() {
+        return depTime1;
     }
 
-    // Getter and Setter for dep_time1
-    public LocalDateTime getDep_time1() {
-        return dep_time1;
+    public LocalDateTime getArrTime1() {
+        return arrTime1;
     }
 
-    public void setDep_time1(LocalDateTime dep_time1) {
-        this.dep_time1 = dep_time1;
+    public LocalDateTime getDepTime2() {
+        return depTime2;
     }
 
-    // Getter and Setter for arr_time1
-    public LocalDateTime getArr_time1() {
-        return arr_time1;
+    public LocalDateTime getArrTime2() {
+        return arrTime2;
     }
 
-    public void setArr_time1(LocalDateTime arr_time1) {
-        this.arr_time1 = arr_time1;
+    public float getDepPrice() {
+        return depPrice;
     }
 
-    // Getter and Setter for dep_time2
-    public LocalDateTime getDep_time2() {
-        return dep_time2;
+    public float getArrPrice() {
+        return arrPrice;
     }
 
-    public void setDep_time2(LocalDateTime dep_time2) {
-        this.dep_time2 = dep_time2;
-    }
-
-    // Getter and Setter for arr_time2
-    public LocalDateTime getArr_time2() {
-        return arr_time2;
-    }
-
-    public void setArr_time2(LocalDateTime arr_time2) {
-        this.arr_time2 = arr_time2;
-    }
-
-    // Getter and Setter for dep_price
-    public float getDep_price() {
-        return dep_price;
-    }
-
-    public void setDep_price(float dep_price) {
-        this.dep_price = dep_price;
-    }
-
-    // Getter and Setter for arr_price
-    public float getArr_price() {
-        return arr_price;
-    }
-
-    public void setArr_price(float arr_price) {
-        this.arr_price = arr_price;
-    }
-
-    // Getter and Setter for airline
     public String getAirline() {
         return airline;
     }
 
-    public void setAirline(String airline) {
-        this.airline = airline;
+    public Boolean getLike() {
+        return isLike;
     }
 
-    // Getter and Setter for is_like
-    public Boolean getIs_like() {
-        return is_like;
-    }
-
-    public void setIs_like(Boolean is_like) {
-        this.is_like = is_like;
-    }
-
-    // Getter and Setter for count
     public int getCount() {
         return count;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void updateLike() {
+        isLike = !isLike;
     }
-
 }
