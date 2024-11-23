@@ -5,7 +5,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 @Entity
 public class Price {
@@ -14,8 +15,35 @@ public class Price {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    private LocalDateTime date;
+    private LocalDate date;
 
-    private int price;
+    private float price;
 
+    public Price(){
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }
