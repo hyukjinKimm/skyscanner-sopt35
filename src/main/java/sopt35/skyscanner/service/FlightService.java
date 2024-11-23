@@ -6,9 +6,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sopt35.skyscanner.dto.FlightAggregateResponse;
+import sopt35.skyscanner.dto.FlightResponse;
 import sopt35.skyscanner.dto.WishListResponse;
 import sopt35.skyscanner.dto.WishResponse;
 import sopt35.skyscanner.repository.Flight;
@@ -55,6 +58,37 @@ public class FlightService {
 
         flight.updateLike();
     }
+
+    public FlightAggregateResponse getTopFlightsAndAveragePrice() {
+
+        // 상위 5개 항공편 조회
+        List<Flight> flights = flightRepository.findTop5ByOrderByArrPriceAsc();
+
+
+        // Flight 정보를 FlightResponse DTO로 변환
+        List<FlightResponse> flightResponses = flights.stream()
+                .map(flight -> new FlightResponse(
+                        flight.getId(),
+                        flight.getAirline(),
+                        "https://github-production-user-asset-6210df.s3.amazonaws.com/107605573/388411184-c6b5dbdf-e1d3-4eab-b920-63df54858b73.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20241122%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20241122T082044Z&X-Amz-Expires=300&X-Amz-Signature=55db812447a5bbad1bc105980bde91469744e36aa4ac5f805b7f391e584fa665&X-Amz-SignedHeaders=host",
+                        flight.getDepartAt(),
+                        flight.getArriveAt(),
+                        getTimeLine(flight.getDepTime1(), flight.getArrTime1()),
+                        getFlightTime(flight.getDepTime1(), flight.getArrTime1()),
+                        "ICN-OKA",
+                        getTimeLine(flight.getDepTime2(), flight.getArrTime2()),
+                        getFlightTime(flight.getDepTime2(), flight.getArrTime2()),
+                        "OKA-ICN",
+                        flight.getArrPrice() + flight.getDepPrice()
+                )).collect(Collectors.toList());
+
+        // 전체 항공편 가격 합 평균 계산
+        float averageTotalPrice = flightRepository.findAveragePriceSum();
+
+        // 결과를 Aggregate DTO로 반환
+        return new FlightAggregateResponse(flightResponses, averageTotalPrice);
+    }
+
 
     private String getTimeLine(LocalDateTime depTime, LocalDateTime arrTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ah:mm", Locale.ENGLISH);

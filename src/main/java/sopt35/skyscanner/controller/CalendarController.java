@@ -10,7 +10,6 @@ import sopt35.skyscanner.service.CalendarService;
 import java.util.List;
 
 @RestController
-@RequestMapping("calendar")
 public class CalendarController {
 
     private final CalendarService calendarService;
@@ -20,7 +19,7 @@ public class CalendarController {
     }
 
     // 월별 항공편 가격 반환 API
-    @GetMapping("/")
+    @GetMapping("/calendar")
     public ResponseEntity<List<PriceListResponse>> getPriceByMonth() {
 
         List<PriceListResponse> prices = calendarService.getPriceGroupByMonth();
